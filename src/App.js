@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
-
+import CountDownClock from './components/countDownClock';
 function App() {
+  //store the num of seconds to count down
+  const [time,setTime] = useState(60);
+
+  //used to reset counter, 
+  //different key will let react get new instance for countdownclock
+  const [num, setNum] =useState(0);
+  // event handler
+  const changeHandler = e => setTime(e.target.value);
+  const reset = () => setNum(num => num + 1);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="counter">
+      <CountDownClock key={num} initTime={time} />
+      <input 
+        type="number"
+        value={time}
+        min={0}
+        max={3600}
+        onChange={changeHandler}
+      />
+      <button onClick={reset}>
+        Reset Counter
+      </button>
     </div>
   );
 }
